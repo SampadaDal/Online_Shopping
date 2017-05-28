@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%-5level %msg %d{HH:mm:ss.SSS} %logger{36} %n</Pattern>
+		</encoder>
+
+	</appender>
+
+	<!-- The logger should be present in the specified packages!! -->
+	<logger name="com.niit" level="DEBUG" additivity = "false">
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<!-- by default , the level of root is DEBUG -->
+	<root level="INFO">
+		<appender-ref ref="consoleAppender" />
+	</root>
+
+</configuration>
+
+<!-- The pattern in which we want to display the message is specified in 
+	the Pattern element. -5level - left justified and of max. 5 characters eg: 
+	DEBUG, ERROR , INFO etc . %d{HH:mm:ss.SSS} - time stamp %msg - the message 
+	we want to display in the logging.. %n - every log message should be displayed 
+	on a separate line. %logger{36}-a class from where we want to log the activity.. -->

@@ -6,9 +6,6 @@
 
 <!-- /resources mapping comes from dispatcher-servlet -->
 <spring:url var="css" value="/resources/css" />
-<spring:url var="js" value="/resources/js" />
-<spring:url var="images" value="/resources/images" />
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,9 +32,6 @@
 <!-- Bootstrap darkly theme -->
 <link href="${css}/bootstrap-darkly-theme.css" rel="stylesheet">
 
-<!--  Bootstrap Data Tables plugin -->
-<link href="${css}/dataTables.bootstrap.css" rel="stylesheet">
-
 <!-- Custom CSS -->
 <link href="${css}/myapp.css" rel="stylesheet">
 
@@ -56,58 +50,30 @@
 <body>
 
 	<div class="wrapper">
-		<!-- Navigation -->
-		<%@include file="./shared/navbar.jsp"%>
-
-		<!-- Page Content -->
-
+		<nav class = "navbar navbar-inverse navbar-fixed-top" role="">
+			<div class="container">
+				<!-- Brand and Toggle get grouped for better mobile display!! -->
+					<div class="navbar-header">
+						<a class="navbar-brand" href="${contextRoot}/home">Home</a>
+					</div>
+			</div>
+		</nav>
+		
 		<div class="content">
-			<!-- Loading home page -->
-			<c:if test="${userClickedHome == true}">
-				<%@include file="home.jsp"%>
-			</c:if>
-
-			<!-- Load only when user clicks about -->
-			<c:if test="${userClickedAbout == true}">
-				<%@include file="about.jsp"%>
-			</c:if>
-
-			<!-- Load only when user clicked contact -->
-			<c:if test="${userClickedContact == true}">
-				<%@include file="contact.jsp"%>
-			</c:if>
-
-
-			<!-- Load only when user clicked All Products & Category Products -->
-			<c:if test="${userClickedAllProducts == true or userClickedCategoryProducts == true}">
-				<%@include file="listProducts.jsp"%>
-			</c:if>
-
-
-			<c:if test="${userClickedShowSingleProduct == true}">
-				<%@include file="singleProduct.jsp"%>
-			</c:if>
-
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="jumbotron">
+							<h1>${errorTitle}</h1>
+							<hr/>
+							<blockquote style = "word-wrap :break-word">
+								${errorDescription}
+							</blockquote>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		
-		
-		<!-- Footer -->
-		<%@include file="./shared/footer.jsp"%>
-
-		<!-- jQuery -->
-		<script src="${js}/jquery-3.1.1.js"></script>
-
-		<!-- Bootstrap Core JavaScript -->
-		<script src="${js}/bootstrap.min.js"></script>
-
-		<!-- Jquery Data Tables (core file)-->
-		<script src="${js}/jquery.dataTables.js"></script>
-
-		<!-- Bootstrap Data Tables -->
-		<script src="${js}/dataTables.bootstrap.js"></script>
-
-		<!-- self coded js file -->
-		<script src="${js}/myapp.js"></script>
 	</div>
 </body>
 

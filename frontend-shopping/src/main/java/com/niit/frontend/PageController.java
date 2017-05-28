@@ -1,5 +1,7 @@
 package com.niit.frontend;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,10 +11,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.niit.backendshopping.dao.CategoryDAO;
 import com.niit.backendshopping.dao.ProductDAO;
 import com.niit.backendshopping.entity.Category;
+import com.niit.backendshopping.entity.Product;
+import com.niit.frontend.exception.ProductNotFoundException;
 
 @Controller
 public class PageController {
 
+	//Creating a logger object for class PageController
+	private static final Logger logger = LoggerFactory.getLogger(PageController.class);
+	
 	@Autowired
 	private ProductDAO productDAO;
 
@@ -27,6 +34,9 @@ public class PageController {
 		 mv.addObject("userClickedHome", true);
 		mv.addObject("title", "Home");
 	
+		logger.info("Inside the index method of PageController class - INFO");
+		logger.debug("Inside the index method of PageController class - DEBUG");
+		
 		//Passing the list of categories
 		mv.addObject("categories",categoryDAO.getList());
 		return mv;
@@ -108,4 +118,27 @@ public class PageController {
 		mv.addObject("title", "Login");
 		return mv;
 	}
+	
+	
+	//for viewing a single product
+	@RequestMapping(value = "/show/{id}/product")
+	public ModelAndView viewSingleProduct(@PathVariable int id) throws ProductNotFoundException {
+		
+		ModelAndView mv = new ModelAndView("page");
+		
+		Product product = productDAO.get(id);
+		
+		if(product == null) throw new ProductNotFoundException();
+		
+		product.setViews(product.getViews() + 1);
+		
+		productDAO.update(product);
+		mv.addObject("title",product.getName());
+		mv.addObject("product", product);
+		
+		mv.addObject("userClickedShowSingleProduct", true);
+		return mv;
+	}
+	
+	
 }
